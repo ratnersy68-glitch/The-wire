@@ -3,6 +3,16 @@ import { CalendarCheck, UserCog, Gavel, FileText, Flag } from 'lucide-react'
 import { useGame } from '../game/GameContext'
 import { ASSIGNMENT_LABELS, describeAssignment } from '../utils/assignmentHelpers'
 import { shortName } from '../utils/suspectHelpers'
+import { MiniBar } from '../components/ui/MiniBar'
+
+const ROLE_LABEL: Record<string, string> = {
+  commander: 'Unit Commander',
+  homicide: 'Homicide Detective',
+  surveillance: 'Surveillance Specialist',
+  financial: 'Financial Investigator',
+  patrol: 'Patrol Officer',
+  wiretap: 'Wiretap Analyst',
+}
 
 export function DashboardPage() {
   const { state, dispatch } = useGame()
@@ -25,22 +35,25 @@ export function DashboardPage() {
       <div className="grid md:grid-cols-2 gap-4 mb-6">
         {state.officers.map((o) => (
           <div key={o.id} className={`border rounded p-3 bg-navy-900 ${o.available ? 'border-charcoal-600' : 'border-muted-redDark opacity-60'}`}>
-            <div className="flex items-center justify-between mb-1">
-              <div className="flex items-center gap-2">
-                <div className="w-9 h-9 rounded-full bg-charcoal-700 flex items-center justify-center text-xs font-mono text-beige-200 border border-charcoal-600">
+            <div className="flex items-start justify-between gap-3 mb-2">
+              <div className="flex items-center gap-2 min-w-0">
+                <div className="w-9 h-9 shrink-0 rounded-full bg-charcoal-700 flex items-center justify-center text-xs font-mono text-beige-200 border border-charcoal-600">
                   {o.portraitInitials}
                 </div>
-                <div>
-                  <div className="text-sm text-beige-200">{o.name}</div>
-                  <div className="text-[11px] text-beige-400 capitalize">{o.role}</div>
+                <div className="min-w-0">
+                  <div className="text-sm text-beige-200 truncate">{o.name}</div>
+                  <div className="text-[11px] text-beige-400 truncate">{ROLE_LABEL[o.role] ?? o.role}</div>
                 </div>
               </div>
-              <div className="text-right text-[11px] font-mono text-beige-400">
-                <div>Fatigue {o.fatigue}%</div>
-                <div>Morale {o.morale}%</div>
+              <div className="flex gap-3 shrink-0">
+                <MiniBar label="Fatigue" value={o.fatigue} invert />
+                <MiniBar label="Morale" value={o.morale} />
               </div>
             </div>
-            <div className="text-xs text-beige-300 mt-2 min-h-[2.5rem]">
+            <div className="text-[9px] uppercase tracking-wider text-beige-400/70 font-mono mb-0.5">
+              Today's Assignment
+            </div>
+            <div className="text-xs text-beige-300 min-h-[2.5rem]">
               {!o.available ? (
                 <span className="text-muted-red">Unavailable today.</span>
               ) : o.assignment ? (
@@ -57,6 +70,7 @@ export function DashboardPage() {
         ))}
       </div>
 
+      <div className="text-[9px] uppercase tracking-widest text-beige-400/70 font-mono mb-1.5">Quick Actions</div>
       <div className="grid md:grid-cols-3 gap-3 mb-6">
         <button
           onClick={() => dispatch({ type: 'NAVIGATE', screen: 'officer_assignment' })}
@@ -84,6 +98,9 @@ export function DashboardPage() {
       >
         <CalendarCheck size={16} /> End the Day
       </button>
+      <p className="text-[11px] text-beige-400 mt-1.5 text-center">
+        Resolves every detective's assignment, checks the wiretap, and advances to tomorrow.
+      </p>
 
       {state.chapter >= 5 && (
         <div className="mt-6 border border-muted-red rounded p-4 bg-muted-redDark/10">
