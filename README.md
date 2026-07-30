@@ -9,6 +9,18 @@ street corners to phones, supply lines, money and political influence, and final
 This is not a shooter. The game is about surveillance, wiretaps, informants, evidence, warrants,
 and the hard trade-offs of running a long-term investigation with limited people, time, and money.
 
+## Play It Live
+
+This repo auto-deploys to GitHub Pages on every push via
+[`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml) — a plain public
+webpage, no Claude.ai account or sign-in required. Once GitHub Pages is enabled for this repo
+(Settings → Pages → Build and deployment → Source: **GitHub Actions**, a one-time repo-owner
+setting), it's live at:
+
+```
+https://ratnersy68-glitch.github.io/The-wire/
+```
+
 ## Getting Started
 
 ```bash
