@@ -8,9 +8,9 @@ export function MainMenuPage() {
   const hasAnySave = slots.some((s) => s.exists)
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-navy-950 relative overflow-hidden">
-      <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{
-        backgroundImage: 'repeating-linear-gradient(45deg, #4ade80 0, #4ade80 1px, transparent 1px, transparent 40px)',
+    <div className="min-h-screen flex items-center justify-center bg-navy-950 relative overflow-hidden film-grain vignette">
+      <div className="absolute inset-0 opacity-[0.05] pointer-events-none" style={{
+        backgroundImage: 'repeating-linear-gradient(45deg, #efefec 0, #efefec 1px, transparent 1px, transparent 40px)',
       }} />
       <div className="relative z-10 max-w-md w-full mx-4 border border-charcoal-600 bg-navy-900/90 rounded p-8 shadow-2xl">
         <h1 className="font-serif text-4xl text-center text-beige-200 tracking-wide mb-1">THE DETAIL</h1>

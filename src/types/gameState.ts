@@ -26,6 +26,7 @@ export type ScreenId =
   | 'end_of_day'
   | 'chapter_summary'
   | 'final_outcome'
+  | 'notes'
 
 export interface Objective {
   id: string
@@ -57,6 +58,13 @@ export interface EndingRecord {
   score: number
 }
 
+export interface NotePage {
+  id: string
+  title: string
+  day: number
+  body: string
+}
+
 export interface GameState {
   screen: ScreenId
   previousScreen: ScreenId | null
@@ -83,6 +91,8 @@ export interface GameState {
   reports: DailyReport[]
   logs: LogEntry[]
   objectives: Objective[]
+  notePages: NotePage[]
+  selectedNotePageId: string | null
 
   codeTermExposure: Record<string, number>
   wiretapActive: boolean

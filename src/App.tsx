@@ -18,6 +18,7 @@ import {
   EndOfDayReportPage,
   ChapterSummaryPage,
   FinalOutcomePage,
+  NotesPage,
 } from './pages'
 
 const BARE_SCREENS = new Set(['main_menu', 'new_game', 'morning_briefing', 'chapter_summary', 'final_outcome'])
@@ -60,6 +61,8 @@ function Screen() {
       return <ChapterSummaryPage />
     case 'final_outcome':
       return <FinalOutcomePage />
+    case 'notes':
+      return <NotesPage />
     default:
       return <MainMenuPage />
   }

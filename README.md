@@ -46,7 +46,7 @@ The game is entirely mouse/pointer driven:
 
 - **Main Menu** — start a new investigation or continue/manage save slots.
 - **Top navigation bar** (visible during play) — jump between Dashboard, City Map, Evidence
-  Board, Wiretap Terminal, Suspects, Officers, Informants, Budget, Warrants, Raid, and Reports.
+  Board, Wiretap Terminal, Suspects, Officers, Informants, Budget, Warrants, Raid, Reports, and Notes.
 - **Evidence Board** — click a pin to select it, drag pins to rearrange the board, click
   "Connect" then click a second pin to draw a relationship line between them.
 - **Officer Assignment** — pick a detective, pick an assignment type, pick a target (location,
@@ -107,7 +107,24 @@ seed and a running counter, so a given save's events are reproducible for testin
 Main Menu, New Game Setup, Morning Briefing, Operations Dashboard, City Map, Evidence Board,
 Wiretap Terminal, Case Reports (surveillance/wiretap/financial/interview/buy/raid/event log),
 Suspect Profiles, Officer Assignment, Informant Management, Budget & Resources, Warrant Request,
-Raid Planning, End of Day Report, Chapter Summary, and Final Case Outcome.
+Raid Planning, End of Day Report, Chapter Summary, Final Case Outcome, and Case Notes.
+
+### Case Notes
+
+A free-form journal (`src/pages/NotesPage.tsx`) styled as a ruled legal pad, set in a bundled
+handwriting typeface (`@fontsource/caveat`, embedded locally rather than linked from a font CDN
+so it renders identically everywhere, including inside a sandboxed preview with no external
+network access). Nothing you write here is tracked or scored — it's just a place to keep your
+own read on the case (who you think runs what, leads worth chasing, hunches) across multiple
+pages that persist in the save file alongside everything else.
+
+### Visual Style
+
+A black-and-white noir palette — no color is used decoratively; the only hue-based accent is a
+muted red reserved strictly for danger/alert states (high organization alert, disproved
+connections, denied warrants). Everything else — the evidence board, city map, resource bar,
+and UI chrome — reads in grayscale, closer to a black-and-white case-file photograph than a
+"hacker terminal" look.
 
 ### The Five Chapters
 

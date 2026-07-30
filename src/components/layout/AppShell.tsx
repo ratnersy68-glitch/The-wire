@@ -11,6 +11,7 @@ import {
   Gavel,
   ShieldAlert,
   FileText,
+  NotebookPen,
   DoorOpen,
   Volume2,
   VolumeX,
@@ -34,6 +35,7 @@ const NAV_ITEMS: { screen: ScreenId; label: string; icon: typeof Map }[] = [
   { screen: 'warrant_request', label: 'Warrants', icon: Gavel },
   { screen: 'raid_planning', label: 'Raid', icon: ShieldAlert },
   { screen: 'surveillance_report', label: 'Reports', icon: FileText },
+  { screen: 'notes', label: 'Notes', icon: NotebookPen },
 ]
 
 export function AppShell({ children }: { children: ReactNode }) {

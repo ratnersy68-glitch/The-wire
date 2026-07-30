@@ -31,6 +31,11 @@ export type GameAction =
   | { type: 'TOGGLE_MUTE' }
   | { type: 'RECRUIT_INFORMANT'; subjectId: string; codename: string }
   | { type: 'FINALIZE_CASE'; arrestSuspectIds: string[] }
+  | { type: 'ADD_NOTE_PAGE' }
+  | { type: 'UPDATE_NOTE_PAGE'; id: string; body: string }
+  | { type: 'RENAME_NOTE_PAGE'; id: string; title: string }
+  | { type: 'DELETE_NOTE_PAGE'; id: string }
+  | { type: 'SELECT_NOTE_PAGE'; id: string }
 
 export function gameReducer(state: GameState, action: GameAction): GameState {
   switch (action.type) {
@@ -130,6 +135,33 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
       const ending = computeFinalScore(withArrests)
       return { ...withArrests, ending, screen: 'final_outcome' }
     }
+
+    case 'ADD_NOTE_PAGE': {
+      const page = { id: nextId('note'), title: `Day ${state.day} Notes`, day: state.day, body: '' }
+      return { ...state, notePages: [...state.notePages, page], selectedNotePageId: page.id }
+    }
+
+    case 'UPDATE_NOTE_PAGE':
+      return {
+        ...state,
+        notePages: state.notePages.map((p) => (p.id === action.id ? { ...p, body: action.body } : p)),
+      }
+
+    case 'RENAME_NOTE_PAGE':
+      return {
+        ...state,
+        notePages: state.notePages.map((p) => (p.id === action.id ? { ...p, title: action.title } : p)),
+      }
+
+    case 'DELETE_NOTE_PAGE': {
+      const remaining = state.notePages.filter((p) => p.id !== action.id)
+      const selectedNotePageId =
+        state.selectedNotePageId === action.id ? (remaining[0]?.id ?? null) : state.selectedNotePageId
+      return { ...state, notePages: remaining, selectedNotePageId }
+    }
+
+    case 'SELECT_NOTE_PAGE':
+      return { ...state, selectedNotePageId: action.id }
 
     default:
       return state

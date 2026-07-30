@@ -13,8 +13,8 @@ export interface BoardNodeView {
 }
 
 const CONNECTION_STYLE: Record<ConnectionStatus, { stroke: string; dash?: string }> = {
-  confirmed: { stroke: '#4ade80' },
-  suspected: { stroke: '#c9b98f', dash: '4 3' },
+  confirmed: { stroke: '#f0f0ec' },
+  suspected: { stroke: '#9a9a94', dash: '4 3' },
   disproved: { stroke: '#a13d3d', dash: '1 3' },
 }
 

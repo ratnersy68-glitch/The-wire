@@ -5,8 +5,8 @@
 html, body, #root {
   height: 100%;
   margin: 0;
-  background-color: #0a0e14;
-  color: #e8dfc8;
+  background-color: #080808;
+  color: #efefec;
 }
 
 body {
@@ -18,14 +18,14 @@ body {
   height: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: #151d2b;
+  background: #121212;
 }
 ::-webkit-scrollbar-thumb {
   background: #3a3a3a;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #4ade80;
+  background: #e2e2de;
 }
 
 .paper-texture {
@@ -34,17 +34,17 @@ body {
 }
 
 .cork-texture {
-  background-color: #6e5138;
+  background-color: #474747;
   background-image:
-    radial-gradient(circle at 20% 30%, rgba(0,0,0,0.15) 0, transparent 3%),
-    radial-gradient(circle at 70% 60%, rgba(0,0,0,0.12) 0, transparent 4%),
-    radial-gradient(circle at 40% 80%, rgba(0,0,0,0.1) 0, transparent 3%),
-    radial-gradient(circle at 85% 20%, rgba(0,0,0,0.13) 0, transparent 3%),
-    radial-gradient(circle at 55% 45%, rgba(0,0,0,0.1) 0, transparent 3%);
+    radial-gradient(circle at 20% 30%, rgba(0,0,0,0.2) 0, transparent 3%),
+    radial-gradient(circle at 70% 60%, rgba(0,0,0,0.16) 0, transparent 4%),
+    radial-gradient(circle at 40% 80%, rgba(0,0,0,0.14) 0, transparent 3%),
+    radial-gradient(circle at 85% 20%, rgba(0,0,0,0.18) 0, transparent 3%),
+    radial-gradient(circle at 55% 45%, rgba(0,0,0,0.14) 0, transparent 3%);
 }
 
 .terminal-glow {
-  text-shadow: 0 0 4px rgba(74, 222, 128, 0.6);
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.55);
 }
 
 .scanlines::before {
@@ -60,4 +60,28 @@ body {
     transparent 2px
   );
   z-index: 10;
+}
+
+/* Subtle film-grain overlay for atmosphere — used sparingly (main menu, chapter breaks). */
+.film-grain {
+  position: relative;
+}
+.film-grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.vignette {
+  position: relative;
+}
+.vignette::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,0.55) 100%);
 }

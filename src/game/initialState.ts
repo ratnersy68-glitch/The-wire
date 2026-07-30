@@ -36,6 +36,15 @@ export function createInitialState(unitName: string, saveSlot: number, seed: num
       },
     ],
     objectives: OBJECTIVES.map((o) => ({ ...o })),
+    notePages: [
+      {
+        id: 'note_1',
+        title: 'Day One',
+        day: 1,
+        body: '',
+      },
+    ],
+    selectedNotePageId: 'note_1',
 
     codeTermExposure: {},
     wiretapActive: false,

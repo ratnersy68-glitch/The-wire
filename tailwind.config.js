@@ -4,42 +4,54 @@ export default {
   theme: {
     extend: {
       colors: {
+        // Black-and-white noir palette. Names are kept from the original
+        // (navy/beige/cork/termGreen) so component classNames didn't need
+        // touching — only the values moved to grayscale.
         navy: {
-          950: '#0a0e14',
-          900: '#0f1620',
-          800: '#151d2b',
-          700: '#1c2636',
+          950: '#080808',
+          900: '#121212',
+          800: '#191919',
+          700: '#212121',
         },
         charcoal: {
-          900: '#1a1a1a',
-          800: '#242424',
-          700: '#2e2e2e',
+          900: '#161616',
+          800: '#202020',
+          700: '#2b2b2b',
           600: '#3a3a3a',
         },
         beige: {
-          200: '#e8dfc8',
-          300: '#ddd0ae',
-          400: '#c9b98f',
+          200: '#efefec',
+          300: '#cfcfca',
+          400: '#a3a39c',
         },
         muted: {
           red: '#a13d3d',
           redDark: '#7a2c2c',
         },
         cork: {
-          800: '#5c4433',
-          700: '#6e5138',
-          600: '#83603f',
-          500: '#9c7248',
+          800: '#3a3a3a',
+          700: '#474747',
+          600: '#555555',
+          500: '#6b6b6b',
         },
         termGreen: {
-          400: '#4ade80',
-          500: '#22c55e',
-          600: '#16a34a',
+          400: '#f5f5f2',
+          500: '#e2e2de',
+          600: '#8f8f89',
         },
       },
       fontFamily: {
         mono: ['"Courier New"', 'Courier', 'monospace'],
         serif: ['Georgia', 'serif'],
+        handwritten: [
+          '"Caveat"',
+          '"Segoe Print"',
+          '"Bradley Hand"',
+          '"Chalkboard SE"',
+          '"Comic Sans MS"',
+          '"Comic Sans"',
+          'cursive',
+        ],
       },
       animation: {
         'flicker': 'flicker 3s infinite',
