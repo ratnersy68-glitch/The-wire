@@ -67,20 +67,20 @@ export function EvidenceBoardPage() {
             onSelectNode={pendingFrom ? confirmConnect : handleSelect}
           />
           {pendingFrom && (
-            <div className="absolute top-2 left-2 right-2 bg-navy-950/95 border border-termGreen-500 rounded p-2 flex flex-wrap items-center gap-2 text-xs">
-              <span className="text-termGreen-400 font-mono">Connecting from selected pin — click target pin</span>
-              <select value={kind} onChange={(e) => setKind(e.target.value as EvidenceConnectionKind)} className="bg-charcoal-800 border border-charcoal-600 rounded px-1 py-0.5">
+            <div className="absolute top-2 left-2 right-2 bg-navy-950/95 border border-beige-300 rounded-md p-2 flex flex-wrap items-center gap-2 text-xs shadow-xl">
+              <span className="text-beige-200 font-mono">Connecting from selected pin — click target pin</span>
+              <select value={kind} onChange={(e) => setKind(e.target.value as EvidenceConnectionKind)} className="field px-1.5 py-1 text-xs">
                 {KIND_OPTIONS.map((k) => <option key={k} value={k}>{CONNECTION_LABELS[k]}</option>)}
               </select>
-              <select value={status} onChange={(e) => setStatus(e.target.value as ConnectionStatus)} className="bg-charcoal-800 border border-charcoal-600 rounded px-1 py-0.5">
+              <select value={status} onChange={(e) => setStatus(e.target.value as ConnectionStatus)} className="field px-1.5 py-1 text-xs">
                 {STATUS_OPTIONS.map((s) => <option key={s} value={s}>{s}</option>)}
               </select>
-              <button onClick={() => setPendingFrom(null)} className="ml-auto p-1 rounded hover:bg-charcoal-700"><X size={14} /></button>
+              <button onClick={() => setPendingFrom(null)} className="btn-ghost ml-auto p-1"><X size={14} /></button>
             </div>
           )}
         </div>
 
-        <div className="border border-charcoal-600 bg-navy-900 rounded p-4 max-h-[560px] overflow-y-auto">
+        <div className="panel p-4 max-h-[560px] overflow-y-auto">
           {selectedNode ? (
             <NodeDetail node={selectedNode} onConnect={startConnect} onOpenProfile={() => {
               if (selectedNode.kind === 'suspect') {
@@ -93,9 +93,9 @@ export function EvidenceBoardPage() {
           )}
 
           <div className="mt-4 pt-3 border-t border-charcoal-700">
-            <p className="text-xs font-mono text-beige-400 mb-2">Legend</p>
+            <p className="section-label mb-2">Connection Key</p>
             <div className="text-[11px] flex flex-col gap-1">
-              <div><span className="text-termGreen-400">&mdash;</span> Confirmed connection</div>
+              <div><span className="text-beige-100">&mdash;</span> Confirmed connection</div>
               <div><span className="text-beige-300">- - -</span> Suspected connection</div>
               <div><span className="text-muted-red">····</span> Disproved connection</div>
             </div>
@@ -116,8 +116,8 @@ function NodeDetail({ node, onConnect, onOpenProfile }: { node: BoardNodeView; o
         {s.knownVehicle && s.vehicle && <p className="text-xs text-beige-300 mb-1">Vehicle: {s.vehicle}</p>}
         {s.knownPhone && <p className="text-xs text-beige-300 mb-1">Phone: {s.phoneNumber}</p>}
         <div className="flex gap-2 mt-3">
-          <button onClick={onConnect} className="px-3 py-1.5 border border-charcoal-600 rounded text-xs hover:bg-charcoal-700">Connect</button>
-          <button onClick={onOpenProfile} className="px-3 py-1.5 border border-termGreen-500 text-termGreen-400 rounded text-xs hover:bg-termGreen-600/10">Full Profile</button>
+          <button onClick={onConnect} className="btn-secondary px-3 py-1.5 text-xs">Connect</button>
+          <button onClick={onOpenProfile} className="btn-primary px-3 py-1.5 text-xs">Full Profile</button>
         </div>
       </div>
     )

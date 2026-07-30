@@ -17,7 +17,7 @@ export function InformantManagementPage() {
       <div className="flex flex-col gap-2 mb-6">
         {state.informants.length === 0 && <p className="text-sm text-beige-400 italic">No active informants.</p>}
         {state.informants.map((i) => (
-          <div key={i.id} className={`border rounded p-3 bg-navy-900 ${i.exposed ? 'border-muted-redDark' : 'border-charcoal-600'}`}>
+          <div key={i.id} className={`panel p-3 ${i.exposed ? '!border-muted-redDark bg-muted-redDark/10' : ''}`}>
             <div className="flex justify-between items-start mb-1">
               <h4 className="text-beige-200">{i.codename}</h4>
               {i.exposed && <span className="text-xs text-muted-red flex items-center gap-1"><ShieldAlert size={12} /> Exposed</span>}
@@ -41,7 +41,7 @@ export function InformantManagementPage() {
           <p className="text-sm text-beige-400 italic">Nobody qualifies yet. Build trust through interviews first.</p>
         )}
         {recruitable.map((s) => (
-          <div key={s.id} className="border border-charcoal-600 bg-navy-900 rounded p-3 flex flex-wrap items-center gap-2 justify-between">
+          <div key={s.id} className="panel p-3 flex flex-wrap items-center gap-2 justify-between">
             <div>
               <h4 className="text-sm text-beige-200">{s.name}</h4>
               <p className="text-xs text-beige-400">{s.relationshipToOrg}</p>
@@ -51,11 +51,11 @@ export function InformantManagementPage() {
                 placeholder="Codename"
                 value={codenameDrafts[s.id] ?? ''}
                 onChange={(e) => setCodenameDrafts((d) => ({ ...d, [s.id]: e.target.value }))}
-                className="bg-charcoal-800 border border-charcoal-600 rounded px-2 py-1 text-xs w-28"
+                className="field px-2 py-1 text-xs w-28"
               />
               <button
                 onClick={() => dispatch({ type: 'RECRUIT_INFORMANT', subjectId: s.id, codename: codenameDrafts[s.id] || 'Confidential Source' })}
-                className="flex items-center gap-1 px-3 py-1.5 border border-termGreen-500 text-termGreen-400 rounded text-xs hover:bg-termGreen-600/10"
+                className="btn-primary px-3 py-1.5 text-xs"
               >
                 <UserPlus size={12} /> Recruit
               </button>

@@ -19,7 +19,7 @@ export function WiretapTerminalPage() {
         </p>
         <button
           onClick={() => dispatch({ type: 'NAVIGATE', screen: 'warrant_request' })}
-          className="px-4 py-2 border border-termGreen-500 text-termGreen-400 rounded font-mono text-sm hover:bg-termGreen-600/10"
+          className="btn-primary px-4 py-2 text-sm"
         >
           Go to Warrant Request
         </button>
@@ -38,7 +38,7 @@ export function WiretapTerminalPage() {
       <p className="text-sm text-beige-400 mb-4">Nobody says what they mean. Read between the lines — and watch for phrases that keep repeating.</p>
 
       <div className="grid md:grid-cols-3 gap-4">
-        <div className="border border-charcoal-600 bg-navy-900 rounded p-2 max-h-[500px] overflow-y-auto">
+        <div className="panel p-2 max-h-[500px] overflow-y-auto">
           {state.calls.length === 0 && <p className="text-xs text-beige-400 p-2 italic">No calls intercepted yet. Check back after ending the day.</p>}
           {state.calls.slice().reverse().map((c) => (
             <button
@@ -90,7 +90,7 @@ export function WiretapTerminalPage() {
                 {!selectedCall.heard && (
                   <button
                     onClick={() => dispatch({ type: 'REVIEW_CALL', callId: selectedCall.id })}
-                    className="px-3 py-1.5 border border-termGreen-500 text-termGreen-400 rounded text-xs hover:bg-termGreen-600/10"
+                    className="btn-primary px-3 py-1.5 text-xs"
                   >
                     Mark Reviewed
                   </button>
@@ -98,7 +98,7 @@ export function WiretapTerminalPage() {
                 {!selectedCall.addedToBoard && (
                   <button
                     onClick={() => dispatch({ type: 'MARK_CALL_BOARD', callId: selectedCall.id })}
-                    className="flex items-center gap-1 px-3 py-1.5 border border-charcoal-600 rounded text-xs hover:bg-charcoal-700"
+                    className="btn-secondary px-3 py-1.5 text-xs"
                   >
                     <Pin size={12} /> File to Case Board
                   </button>
@@ -111,8 +111,8 @@ export function WiretapTerminalPage() {
         </div>
       </div>
 
-      <div className="mt-4 border border-charcoal-600 bg-navy-900 rounded p-3">
-        <p className="text-xs font-mono text-beige-400 mb-2">Decoded Terms</p>
+      <div className="mt-4 panel p-3">
+        <p className="section-label mb-2">Decoded Terms</p>
         <div className="flex flex-wrap gap-2">
           {state.codeTerms.filter((t) => t.discovered).map((t) => (
             <span key={t.term} className="text-xs px-2 py-1 rounded border border-termGreen-600/50 bg-termGreen-600/10 text-termGreen-400">

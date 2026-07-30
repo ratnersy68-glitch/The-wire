@@ -41,7 +41,7 @@ export function CityMapPage() {
               onSelect={(id) => dispatch({ type: 'SELECT_LOCATION', id })}
             />
           </div>
-          <div className="border border-charcoal-600 bg-navy-900 rounded px-3 py-2 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[10px] font-mono text-beige-400">
+          <div className="panel px-3 py-2 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[10px] font-mono text-beige-400">
             <span className="uppercase tracking-wider text-beige-400/70">Map Key:</span>
             <span className="flex items-center gap-1.5">
               <span className="w-2.5 h-2.5 rounded-full bg-white inline-block" /> Police / Courthouse
@@ -61,7 +61,7 @@ export function CityMapPage() {
           </div>
         </div>
 
-        <div className="border border-charcoal-600 bg-navy-900 rounded p-4 flex flex-col">
+        <div className="panel p-4 flex flex-col">
           <div className="flex-1">
             {selected ? (
               <>
@@ -94,7 +94,7 @@ export function CityMapPage() {
 
                 <button
                   onClick={() => dispatch({ type: 'NAVIGATE', screen: 'officer_assignment' })}
-                  className="w-full flex items-center justify-center gap-2 px-3 py-2 border border-charcoal-600 rounded hover:bg-charcoal-700 font-mono text-xs"
+                  className="btn-primary w-full px-3 py-2 text-xs"
                 >
                   <UserCog size={14} /> Assign Surveillance Here
                 </button>

@@ -16,7 +16,7 @@ export function MorningBriefingPage() {
         </p>
         <h2 className="font-serif text-3xl mb-4">{CHAPTER_TITLES[state.chapter]}</h2>
 
-        <div className="border border-charcoal-600 bg-navy-900 rounded p-4 mb-4 paper-texture">
+        <div className="panel p-4 mb-4 paper-texture">
           <p className="text-sm leading-relaxed text-beige-200">{CHAPTER_BRIEFS[state.chapter]}</p>
         </div>
 
@@ -27,7 +27,7 @@ export function MorningBriefingPage() {
         )}
 
         <h3 className="font-serif text-lg mb-2">Chapter Objectives</h3>
-        <div className="border border-charcoal-600 bg-navy-900 rounded p-3 mb-6 flex flex-col gap-2">
+        <div className="panel p-3 mb-6 flex flex-col gap-2">
           {objectives.map((obj) => (
             <div key={obj.id} className="flex items-start gap-2 text-sm">
               {obj.completed ? (
@@ -46,7 +46,7 @@ export function MorningBriefingPage() {
         {state.reports.length > 0 && (
           <>
             <h3 className="font-serif text-lg mb-2">Overnight Notes</h3>
-            <div className="border border-charcoal-600 bg-navy-900 rounded p-3 mb-6 max-h-40 overflow-y-auto flex flex-col gap-2">
+            <div className="panel p-3 mb-6 max-h-40 overflow-y-auto flex flex-col gap-2">
               {state.reports.slice(0, 3).map((r) => (
                 <div key={r.id} className="text-xs text-beige-300">
                   <span className="text-termGreen-500 font-mono">[{r.title}]</span> {r.body}
@@ -58,7 +58,7 @@ export function MorningBriefingPage() {
 
         <button
           onClick={() => dispatch({ type: 'NAVIGATE', screen: 'dashboard' })}
-          className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-termGreen-600/20 border border-termGreen-500 text-termGreen-400 rounded hover:bg-termGreen-600/30 font-mono text-sm"
+          className="w-full flex items-center justify-center gap-2 px-4 py-3 btn-primary font-mono text-sm"
         >
           Begin the Day <ArrowRight size={16} />
         </button>

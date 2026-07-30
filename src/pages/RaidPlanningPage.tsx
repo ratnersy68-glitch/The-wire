@@ -33,26 +33,24 @@ export function RaidPlanningPage() {
       </p>
 
       {raidableLocations.length === 0 ? (
-        <div className="border border-charcoal-600 bg-navy-900 rounded p-4 text-sm text-beige-400 italic">
+        <div className="panel p-4 text-sm text-beige-400 italic">
           No approved search warrants yet. Request one from the Warrant Request screen once you have a strong location lead.
         </div>
       ) : (
         <>
-          <label className="block text-xs font-mono text-beige-400 mb-1">Target Location</label>
-          <select value={locationId} onChange={(e) => setLocationId(e.target.value)} className="w-full bg-charcoal-800 border border-charcoal-600 rounded px-3 py-2 text-sm mb-4">
+          <label className="section-label block mb-1">Target Location</label>
+          <select value={locationId} onChange={(e) => setLocationId(e.target.value)} className="field px-3 py-2 text-sm mb-4">
             <option value="">Select location...</option>
             {raidableLocations.map((l) => <option key={l.id} value={l.id}>{l.name} — {l.district}</option>)}
           </select>
 
-          <label className="block text-xs font-mono text-beige-400 mb-2">Assign Officers</label>
+          <label className="section-label block mb-2">Assign Officers</label>
           <div className="grid md:grid-cols-2 gap-2 mb-4">
             {availableOfficers.map((o) => (
               <button
                 key={o.id}
                 onClick={() => toggleOfficer(o.id)}
-                className={`text-left px-3 py-2 rounded border text-xs ${
-                  officerIds.includes(o.id) ? 'border-termGreen-500 bg-termGreen-600/10' : 'border-charcoal-600'
-                }`}
+                className={officerIds.includes(o.id) ? 'text-left btn-primary px-3 py-2 text-xs justify-start' : 'text-left btn-secondary px-3 py-2 text-xs justify-start'}
               >
                 {o.name} <span className="text-beige-400">({o.role})</span>
               </button>
@@ -60,7 +58,7 @@ export function RaidPlanningPage() {
             {availableOfficers.length === 0 && <p className="text-xs text-beige-400 italic">No officers free — check assignments.</p>}
           </div>
 
-          <div className="border border-charcoal-600 bg-navy-900 rounded p-3 mb-4 text-xs font-mono text-beige-400">
+          <div className="panel p-3 mb-4 text-xs font-mono text-beige-400">
             Current Evidence Strength: {state.resources.evidenceStrength}% &middot; Organization Alert: {state.resources.alertLevel}%
             <br />
             Cost: $1,500 and 6 overtime hours.
@@ -69,7 +67,7 @@ export function RaidPlanningPage() {
           <button
             disabled={!locationId || officerIds.length === 0}
             onClick={launch}
-            className="w-full px-4 py-3 bg-muted-redDark/40 border border-muted-red text-beige-200 rounded font-mono text-sm hover:bg-muted-redDark/60 disabled:opacity-40"
+            className="btn-danger w-full px-4 py-3 text-sm"
           >
             Launch Raid
           </button>

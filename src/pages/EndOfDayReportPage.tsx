@@ -16,7 +16,7 @@ export function EndOfDayReportPage() {
           <p className="text-sm text-beige-400 italic">No new reports today. Consider giving detectives an assignment tomorrow.</p>
         )}
         {todaysReports.map((r) => (
-          <div key={r.id} className="border border-charcoal-600 bg-navy-900 rounded p-3">
+          <div key={r.id} className="panel p-3">
             <h4 className="text-sm text-beige-200 mb-1">{r.title}</h4>
             <p className="text-sm text-beige-300">{r.body}</p>
           </div>
@@ -25,7 +25,7 @@ export function EndOfDayReportPage() {
 
       <button
         onClick={() => dispatch({ type: 'NAVIGATE', screen: 'morning_briefing' })}
-        className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-termGreen-600/20 border border-termGreen-500 text-termGreen-400 rounded hover:bg-termGreen-600/30 font-mono text-sm"
+        className="w-full flex items-center justify-center gap-2 px-4 py-3 btn-primary font-mono text-sm"
       >
         Continue to Tomorrow <ArrowRight size={16} />
       </button>

@@ -9,7 +9,7 @@ export function ChapterSummaryPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-navy-950 p-6">
-      <div className="max-w-xl w-full border border-charcoal-600 bg-navy-900 rounded p-8 text-center">
+      <div className="max-w-xl w-full panel p-8 text-center">
         <p className="text-xs font-mono text-termGreen-500 mb-2">CASE FILE UPDATE</p>
         <h2 className="font-serif text-2xl mb-1">{CHAPTER_TITLES[completedChapter]} — Complete</h2>
         <p className="text-sm text-beige-400 mb-6">
@@ -23,7 +23,7 @@ export function ChapterSummaryPage() {
 
         <button
           onClick={() => dispatch({ type: 'ACK_CHAPTER_SUMMARY' })}
-          className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-termGreen-600/20 border border-termGreen-500 text-termGreen-400 rounded hover:bg-termGreen-600/30 font-mono text-sm"
+          className="w-full flex items-center justify-center gap-2 px-4 py-3 btn-primary font-mono text-sm"
         >
           Continue <ArrowRight size={16} />
         </button>

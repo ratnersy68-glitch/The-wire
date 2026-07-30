@@ -22,10 +22,10 @@ export function NotesPage() {
       </p>
 
       <div className="grid md:grid-cols-4 gap-4">
-        <div className="border border-charcoal-600 bg-navy-900 rounded p-2 md:max-h-[640px] overflow-y-auto">
+        <div className="panel p-2 md:max-h-[640px] overflow-y-auto">
           <button
             onClick={() => dispatch({ type: 'ADD_NOTE_PAGE' })}
-            className="w-full flex items-center justify-center gap-1.5 px-2 py-2 mb-2 rounded border border-charcoal-600 hover:bg-charcoal-700 text-xs font-mono"
+            className="btn-secondary w-full px-2 py-2 mb-2 text-xs"
           >
             <Plus size={14} /> New Page
           </button>
@@ -33,14 +33,14 @@ export function NotesPage() {
             <div
               key={p.id}
               className={`group flex items-center gap-1 rounded mb-1 ${
-                selected?.id === p.id ? 'bg-termGreen-600/15' : 'hover:bg-charcoal-700'
+                selected?.id === p.id ? 'bg-white/10' : 'hover:bg-white/5'
               }`}
             >
               <button
                 onClick={() => dispatch({ type: 'SELECT_NOTE_PAGE', id: p.id })}
                 className="flex-1 text-left px-2 py-1.5 text-xs truncate"
               >
-                <div className={selected?.id === p.id ? 'text-termGreen-500' : 'text-beige-300'}>{p.title}</div>
+                <div className={selected?.id === p.id ? 'text-beige-200' : 'text-beige-300'}>{p.title}</div>
                 <div className="text-beige-400 text-[10px]">Day {p.day}</div>
               </button>
               {pages.length > 1 && (

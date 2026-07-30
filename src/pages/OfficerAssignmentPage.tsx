@@ -60,8 +60,8 @@ export function OfficerAssignmentPage() {
             key={o.id}
             onClick={() => setOfficerId(o.id)}
             disabled={!o.available}
-            className={`text-left border rounded p-3 ${
-              officerId === o.id ? 'border-termGreen-500 bg-termGreen-600/10' : 'border-charcoal-600 bg-navy-900'
+            className={`text-left panel p-3 transition-colors ${
+              officerId === o.id ? '!border-beige-300 bg-white/10' : ''
             } disabled:opacity-40`}
           >
             <div className="text-sm text-beige-200 flex items-center gap-1">
@@ -76,7 +76,7 @@ export function OfficerAssignmentPage() {
       </div>
 
       {officer && officer.available && (
-        <div className="border border-charcoal-600 bg-navy-900 rounded p-4">
+        <div className="panel p-4">
           <h3 className="font-serif text-lg mb-1">{officer.name}</h3>
           <p className="text-xs text-beige-400 mb-3">{officer.personality}</p>
 
@@ -85,9 +85,7 @@ export function OfficerAssignmentPage() {
               <button
                 key={t}
                 onClick={() => setType(t)}
-                className={`px-3 py-1.5 rounded border text-xs font-mono ${
-                  type === t ? 'border-termGreen-500 bg-termGreen-600/10 text-termGreen-400' : 'border-charcoal-600 text-beige-300'
-                }`}
+                className={type === t ? 'btn-primary px-3 py-1.5 text-xs' : 'btn-secondary px-3 py-1.5 text-xs'}
               >
                 {ASSIGNMENT_LABELS[t]}
               </button>
@@ -95,7 +93,7 @@ export function OfficerAssignmentPage() {
           </div>
 
           {type === 'surveillance' && (
-            <select value={locationId} onChange={(e) => setLocationId(e.target.value)} className="w-full bg-charcoal-800 border border-charcoal-600 rounded px-3 py-2 text-sm mb-3">
+            <select value={locationId} onChange={(e) => setLocationId(e.target.value)} className="field px-3 py-2 text-sm mb-3">
               <option value="">Select a location...</option>
               {discoveredLocations.map((l) => (
                 <option key={l.id} value={l.id}>{l.name} — {l.district}</option>
@@ -104,7 +102,7 @@ export function OfficerAssignmentPage() {
           )}
 
           {(type === 'followSuspect' || type === 'financialInvestigation' || type === 'controlledBuy') && (
-            <select value={suspectId} onChange={(e) => setSuspectId(e.target.value)} className="w-full bg-charcoal-800 border border-charcoal-600 rounded px-3 py-2 text-sm mb-3">
+            <select value={suspectId} onChange={(e) => setSuspectId(e.target.value)} className="field px-3 py-2 text-sm mb-3">
               <option value="">Select a suspect...</option>
               {knownSuspects.map((s) => (
                 <option key={s.id} value={s.id}>{shortName(s)} — {s.knownRole ? s.roleLabel : 'role unknown'}</option>
@@ -113,7 +111,7 @@ export function OfficerAssignmentPage() {
           )}
 
           {type === 'controlledBuy' && (
-            <select value={informantId} onChange={(e) => setInformantId(e.target.value)} className="w-full bg-charcoal-800 border border-charcoal-600 rounded px-3 py-2 text-sm mb-3">
+            <select value={informantId} onChange={(e) => setInformantId(e.target.value)} className="field px-3 py-2 text-sm mb-3">
               <option value="">Select an informant...</option>
               {activeInformants.map((i) => (
                 <option key={i.id} value={i.id}>{i.codename}</option>
@@ -122,7 +120,7 @@ export function OfficerAssignmentPage() {
           )}
 
           {type === 'interview' && (
-            <select value={subjectId} onChange={(e) => setSubjectId(e.target.value)} className="w-full bg-charcoal-800 border border-charcoal-600 rounded px-3 py-2 text-sm mb-3">
+            <select value={subjectId} onChange={(e) => setSubjectId(e.target.value)} className="field px-3 py-2 text-sm mb-3">
               <option value="">Select a person to interview...</option>
               {state.interviewSubjects.map((s) => (
                 <option key={s.id} value={s.id}>{s.name} ({s.role})</option>
@@ -141,11 +139,11 @@ export function OfficerAssignmentPage() {
           )}
 
           <div className="flex gap-2">
-            <button onClick={assign} className="flex-1 px-4 py-2 bg-termGreen-600/20 border border-termGreen-500 text-termGreen-400 rounded font-mono text-sm hover:bg-termGreen-600/30">
+            <button onClick={assign} className="flex-1 px-4 py-2 btn-primary font-mono text-sm">
               Confirm Assignment
             </button>
             {officer.assignment && (
-              <button onClick={clear} className="px-4 py-2 border border-charcoal-600 rounded font-mono text-sm hover:bg-charcoal-700">
+              <button onClick={clear} className="btn-secondary px-4 py-2 text-sm">
                 Clear
               </button>
             )}

@@ -28,9 +28,7 @@ export function SurveillanceReportPage() {
           <button
             key={k}
             onClick={() => setFilter(k)}
-            className={`px-2.5 py-1 rounded border text-xs font-mono ${
-              filter === k ? 'border-termGreen-500 bg-termGreen-600/10 text-termGreen-400' : 'border-charcoal-600 text-beige-300'
-            }`}
+            className={filter === k ? 'btn-primary px-2.5 py-1 text-xs' : 'btn-secondary px-2.5 py-1 text-xs'}
           >
             {k === 'all' ? 'All' : KIND_LABELS[k]}
           </button>
@@ -40,7 +38,7 @@ export function SurveillanceReportPage() {
       <div className="flex flex-col gap-2">
         {reports.length === 0 && <p className="text-sm text-beige-400 italic">No reports of this type yet.</p>}
         {reports.map((r) => (
-          <div key={r.id} className="border border-charcoal-600 bg-navy-900 rounded p-3">
+          <div key={r.id} className="panel p-3">
             <div className="flex justify-between text-xs font-mono text-beige-400 mb-1">
               <span>{KIND_LABELS[r.kind]}</span>
               <span>Day {r.day}</span>

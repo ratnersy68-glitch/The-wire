@@ -43,34 +43,36 @@ export function NewGameSetupPage() {
           Name your detail and pick a save slot. Choices you make from here on shape how the case unfolds.
         </p>
 
-        <div className="border border-charcoal-600 bg-navy-900 rounded p-4 mb-6">
-          <label className="block text-xs font-mono text-beige-400 mb-1">Unit Name</label>
+        <div className="panel p-4 mb-6">
+          <label className="section-label block mb-1">Unit Name</label>
           <input
             value={unitName}
             onChange={(e) => setUnitName(e.target.value)}
             maxLength={40}
-            className="w-full bg-charcoal-800 border border-charcoal-600 rounded px-3 py-2 text-sm mb-4 focus:outline-none focus:border-termGreen-500"
+            className="field px-3 py-2 text-sm mb-4"
           />
 
-          <label className="block text-xs font-mono text-beige-400 mb-2">Save Slot</label>
+          <label className="section-label block mb-2">Save Slot</label>
           <div className="flex gap-2 mb-4">
             {slots.map((s) => (
               <button
                 key={s.slot}
                 onClick={() => setSelectedSlot(s.slot)}
-                className={`flex-1 px-3 py-2 rounded border text-xs font-mono text-left ${
-                  selectedSlot === s.slot ? 'border-termGreen-500 bg-termGreen-600/10' : 'border-charcoal-600'
-                }`}
+                className={
+                  selectedSlot === s.slot
+                    ? 'flex-1 btn-primary px-3 py-2 text-xs justify-start flex-col items-start'
+                    : 'flex-1 btn-secondary px-3 py-2 text-xs justify-start flex-col items-start'
+                }
               >
                 <div>Slot {s.slot}</div>
-                <div className="text-beige-400">{s.exists ? `${s.unitName} — Ch.${s.chapter} Day ${s.day}` : 'Empty'}</div>
+                <div className="text-beige-400 font-normal">{s.exists ? `${s.unitName} — Ch.${s.chapter} Day ${s.day}` : 'Empty'}</div>
               </button>
             ))}
           </div>
 
           <button
             onClick={handleStart}
-            className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-termGreen-600/20 border border-termGreen-500 text-termGreen-400 rounded hover:bg-termGreen-600/30 font-mono text-sm"
+            className="btn-primary w-full px-4 py-2.5 text-sm"
           >
             <Play size={16} /> Begin Investigation
           </button>
@@ -82,16 +84,16 @@ export function NewGameSetupPage() {
             <p className="text-xs text-beige-400 font-mono">No saved cases yet.</p>
           )}
           {slots.filter((s) => s.exists).map((s) => (
-            <div key={s.slot} className="flex items-center justify-between border border-charcoal-600 rounded px-3 py-2 bg-navy-900">
+            <div key={s.slot} className="panel flex items-center justify-between px-3 py-2">
               <div className="text-xs font-mono">
                 <div className="text-beige-200">{s.unitName} — Slot {s.slot}</div>
                 <div className="text-beige-400">Chapter {s.chapter}, Day {s.day}</div>
               </div>
               <div className="flex gap-2">
-                <button onClick={() => handleLoad(s.slot)} className="p-1.5 rounded border border-charcoal-600 hover:bg-charcoal-700" title="Load">
+                <button onClick={() => handleLoad(s.slot)} className="btn-secondary p-1.5" title="Load">
                   <FolderOpen size={14} />
                 </button>
-                <button onClick={() => handleDelete(s.slot)} className="p-1.5 rounded border border-charcoal-600 hover:bg-muted-redDark" title="Delete">
+                <button onClick={() => handleDelete(s.slot)} className="btn-danger p-1.5" title="Delete">
                   <Trash2 size={14} />
                 </button>
               </div>
