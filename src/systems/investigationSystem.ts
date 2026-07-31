@@ -554,6 +554,7 @@ export function endDay(state: GameState): EndDayResult {
     dayInChapter: next.dayInChapter + 1,
     rngCounter: next.rngCounter + 1,
     officers: next.officers.map((o) => ({ ...o, assignment: null, available: o.fatigue < 95 })),
+    hintsUsedToday: 0,
   }
 
   const transition = checkChapterTransition(next)

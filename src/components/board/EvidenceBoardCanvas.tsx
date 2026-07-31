@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Camera, FileText, MapPin, User, DollarSign, Gavel } from 'lucide-react'
 import type { BoardConnection, ConnectionStatus, EvidenceItem, Location, Suspect } from '../../types'
 import { hashPosition } from '../../utils/boardLayout'
@@ -28,6 +28,67 @@ const EVIDENCE_ICON: Record<EvidenceItem['type'], typeof Camera> = {
   arrest_record: Gavel,
 }
 
+function ConnectionLine({
+  status,
+  from,
+  to,
+  boardReadyRef,
+}: {
+  status: ConnectionStatus
+  from: { x: number; y: number }
+  to: { x: number; y: number }
+  boardReadyRef: React.RefObject<boolean>
+}) {
+  const style = CONNECTION_STYLE[status]
+  const length = Math.hypot(to.x - from.x, to.y - from.y) || 1
+  // Read (not mutate) a ref the board flips true in its own mount effect.
+  // Children's effects fire before a parent's, so every connection present
+  // in the board's first render still sees `false` here — only connections
+  // that show up after the board has actually mounted animate in.
+  const isNew = boardReadyRef.current
+  const [phase, setPhase] = useState<'pre' | 'drawing' | 'done'>(isNew ? 'pre' : 'done')
+
+  useEffect(() => {
+    if (phase !== 'pre') return
+    const raf = requestAnimationFrame(() => setPhase('drawing'))
+    const t = setTimeout(() => setPhase('done'), 650)
+    return () => {
+      cancelAnimationFrame(raf)
+      clearTimeout(t)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [phase])
+
+  if (phase === 'done') {
+    return (
+      <line
+        x1={from.x}
+        y1={from.y}
+        x2={to.x}
+        y2={to.y}
+        stroke={style.stroke}
+        strokeWidth={0.4}
+        strokeDasharray={style.dash}
+        vectorEffect="non-scaling-stroke"
+      />
+    )
+  }
+  return (
+    <line
+      x1={from.x}
+      y1={from.y}
+      x2={to.x}
+      y2={to.y}
+      stroke={style.stroke}
+      strokeWidth={0.4}
+      strokeDasharray={length}
+      strokeDashoffset={phase === 'pre' ? length : 0}
+      style={{ transition: 'stroke-dashoffset 600ms ease-out' }}
+      vectorEffect="non-scaling-stroke"
+    />
+  )
+}
+
 export function EvidenceBoardCanvas({
   nodes,
   connections,
@@ -42,6 +103,10 @@ export function EvidenceBoardCanvas({
   const containerRef = useRef<HTMLDivElement>(null)
   const [positions, setPositions] = useState<Record<string, { x: number; y: number }>>({})
   const dragRef = useRef<{ id: string; pointerId: number } | null>(null)
+  const boardReadyRef = useRef(false)
+  useEffect(() => {
+    boardReadyRef.current = true
+  }, [])
 
   function getPos(id: string, salt: number) {
     return positions[id] ?? hashPosition(id, salt)
@@ -78,20 +143,7 @@ export function EvidenceBoardCanvas({
           const from = nodePos.get(c.fromId)
           const to = nodePos.get(c.toId)
           if (!from || !to) return null
-          const style = CONNECTION_STYLE[c.status]
-          return (
-            <line
-              key={c.id}
-              x1={from.x}
-              y1={from.y}
-              x2={to.x}
-              y2={to.y}
-              stroke={style.stroke}
-              strokeWidth={0.4}
-              strokeDasharray={style.dash}
-              vectorEffect="non-scaling-stroke"
-            />
-          )
+          return <ConnectionLine key={c.id} status={c.status} from={from} to={to} boardReadyRef={boardReadyRef} />
         })}
       </svg>
 

@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import { useGame } from '../game/GameContext'
 import { ShieldAlert } from 'lucide-react'
+import { useSound } from '../hooks/useSound'
 
 export function RaidPlanningPage() {
   const { state, dispatch } = useGame()
+  const play = useSound()
   const [locationId, setLocationId] = useState('')
   const [officerIds, setOfficerIds] = useState<string[]>([])
 
@@ -14,11 +16,13 @@ export function RaidPlanningPage() {
   const availableOfficers = state.officers.filter((o) => o.available && !o.assignment)
 
   function toggleOfficer(id: string) {
+    play('click')
     setOfficerIds((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]))
   }
 
   function launch() {
     if (!locationId || officerIds.length === 0) return
+    play('shutter')
     dispatch({ type: 'EXECUTE_RAID', locationId, officerIds })
     setLocationId('')
     setOfficerIds([])

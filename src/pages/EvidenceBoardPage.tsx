@@ -11,6 +11,7 @@ import { CONNECTION_LABELS } from '../systems/evidenceSystem'
 import type { ConnectionStatus, EvidenceConnectionKind } from '../types'
 import { shortName } from '../utils/suspectHelpers'
 import { X } from 'lucide-react'
+import { useSound } from '../hooks/useSound'
 
 const KIND_OPTIONS: EvidenceConnectionKind[] = [
   'called', 'met_with', 'works_for', 'supplies', 'lives_at', 'owns', 'paid', 'threatened', 'related_to',
@@ -19,6 +20,7 @@ const STATUS_OPTIONS: ConnectionStatus[] = ['suspected', 'confirmed', 'disproved
 
 export function EvidenceBoardPage() {
   const { state, dispatch } = useGame()
+  const play = useSound()
   const [selection, setSelection] = useState<string | null>(null)
   const [pendingFrom, setPendingFrom] = useState<string | null>(null)
   const [kind, setKind] = useState<EvidenceConnectionKind>('met_with')
@@ -38,6 +40,7 @@ export function EvidenceBoardPage() {
       // waiting on connect confirm — do nothing, handled by overlay
       return
     }
+    play('click')
     setSelection(id)
   }
 
@@ -47,6 +50,7 @@ export function EvidenceBoardPage() {
 
   function confirmConnect(toId: string) {
     if (!pendingFrom) return
+    play('pin')
     dispatch({ type: 'ADD_CONNECTION', fromId: pendingFrom, toId, kind, status })
     setPendingFrom(null)
   }

@@ -36,6 +36,7 @@ export type GameAction =
   | { type: 'RENAME_NOTE_PAGE'; id: string; title: string }
   | { type: 'DELETE_NOTE_PAGE'; id: string }
   | { type: 'SELECT_NOTE_PAGE'; id: string }
+  | { type: 'USE_HINT' }
 
 export function gameReducer(state: GameState, action: GameAction): GameState {
   switch (action.type) {
@@ -162,6 +163,10 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 
     case 'SELECT_NOTE_PAGE':
       return { ...state, selectedNotePageId: action.id }
+
+    case 'USE_HINT':
+      if (state.hintsUsedToday >= state.maxHintsPerDay) return state
+      return { ...state, hintsUsedToday: state.hintsUsedToday + 1 }
 
     default:
       return state

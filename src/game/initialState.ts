@@ -62,6 +62,8 @@ export function createInitialState(unitName: string, saveSlot: number, seed: num
     ending: null,
     dayInChapter: 0,
     muted: false,
+    hintsUsedToday: 0,
+    maxHintsPerDay: 2,
   }
 }
 

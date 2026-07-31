@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import { Plus, Trash2, NotebookPen } from 'lucide-react'
 import { useGame } from '../game/GameContext'
+import { useSound } from '../hooks/useSound'
 
 const LINE_HEIGHT = 30
 
 export function NotesPage() {
   const { state, dispatch } = useGame()
+  const play = useSound()
   const [titleDraft, setTitleDraft] = useState<string | null>(null)
 
   const pages = state.notePages
@@ -24,7 +26,7 @@ export function NotesPage() {
       <div className="grid md:grid-cols-4 gap-4">
         <div className="panel p-2 md:max-h-[640px] overflow-y-auto">
           <button
-            onClick={() => dispatch({ type: 'ADD_NOTE_PAGE' })}
+            onClick={() => { play('click'); dispatch({ type: 'ADD_NOTE_PAGE' }) }}
             className="btn-secondary w-full px-2 py-2 mb-2 text-xs"
           >
             <Plus size={14} /> New Page
@@ -77,6 +79,9 @@ export function NotesPage() {
                 <textarea
                   value={selected.body}
                   onChange={(e) => dispatch({ type: 'UPDATE_NOTE_PAGE', id: selected.id, body: e.target.value })}
+                  onKeyDown={(e) => {
+                    if (e.key.length === 1 || e.key === 'Backspace' || e.key === 'Enter') play('type')
+                  }}
                   placeholder="Write down what you've figured out..."
                   className="w-full min-h-[560px] bg-transparent resize-none focus:outline-none text-charcoal-900 font-handwritten text-xl"
                   style={{ lineHeight: `${LINE_HEIGHT}px`, paddingTop: '2px' }}

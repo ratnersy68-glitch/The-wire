@@ -110,6 +110,8 @@ export interface GameState {
   ending: EndingRecord | null
   dayInChapter: number
   muted: boolean
+  hintsUsedToday: number
+  maxHintsPerDay: number
 }
 
 export interface SaveSlotMeta {

@@ -57,6 +57,8 @@ export default {
         'flicker': 'flicker 3s infinite',
         'pin-drop': 'pinDrop 0.3s ease-out',
         'fade-in': 'fadeIn 0.4s ease-out',
+        'stamp-slam': 'stampSlam 0.5s cubic-bezier(0.2, 1.6, 0.4, 1)',
+        'draw-line': 'drawLine 0.6s ease-out forwards',
       },
       keyframes: {
         flicker: {
@@ -72,6 +74,16 @@ export default {
         fadeIn: {
           '0%': { opacity: '0', transform: 'translateY(4px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        stampSlam: {
+          '0%': { transform: 'scale(2.8) rotate(-16deg)', opacity: '0' },
+          '55%': { transform: 'scale(0.94) rotate(-8deg)', opacity: '1' },
+          '75%': { transform: 'scale(1.08) rotate(-9deg)' },
+          '100%': { transform: 'scale(1) rotate(-8deg)', opacity: '1' },
+        },
+        drawLine: {
+          '0%': { strokeDashoffset: '1' },
+          '100%': { strokeDashoffset: '0' },
         },
       },
     },

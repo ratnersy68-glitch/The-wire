@@ -1,6 +1,7 @@
 import { Play, FolderOpen, RotateCcw } from 'lucide-react'
 import { useGame } from '../game/GameContext'
 import { listSaveSlots } from '../systems/saveSystem'
+import { useSound } from '../hooks/useSound'
 
 function caseNumber(): string {
   const now = new Date()
@@ -11,6 +12,7 @@ function caseNumber(): string {
 
 export function MainMenuPage() {
   const { dispatch } = useGame()
+  const play = useSound()
   const slots = listSaveSlots()
   const hasAnySave = slots.some((s) => s.exists)
 
@@ -39,20 +41,20 @@ export function MainMenuPage() {
 
           <div className="flex flex-col gap-2.5">
             <button
-              onClick={() => dispatch({ type: 'NAVIGATE', screen: 'new_game' })}
+              onClick={() => { play('success'); dispatch({ type: 'NAVIGATE', screen: 'new_game' }) }}
               className="btn-primary px-4 py-3 text-sm"
             >
               <Play size={16} /> New Investigation
             </button>
             <button
               disabled={!hasAnySave}
-              onClick={() => dispatch({ type: 'NAVIGATE', screen: 'new_game' })}
+              onClick={() => { play('nav'); dispatch({ type: 'NAVIGATE', screen: 'new_game' }) }}
               className="btn-secondary px-4 py-3 text-sm"
             >
               <FolderOpen size={16} /> Continue Investigation
             </button>
             <button
-              onClick={() => dispatch({ type: 'NAVIGATE', screen: 'new_game' })}
+              onClick={() => { play('nav'); dispatch({ type: 'NAVIGATE', screen: 'new_game' }) }}
               className="btn-ghost px-4 py-3 text-sm"
             >
               <RotateCcw size={16} /> Manage Save Slots

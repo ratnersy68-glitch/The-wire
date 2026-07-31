@@ -22,6 +22,10 @@ import { ResourceBar } from './ResourceBar'
 import type { ScreenId } from '../../types'
 import { CHAPTER_TITLES } from '../../data/objectives'
 import { saveGame, saveMuted } from '../../systems/saveSystem'
+import { useSound } from '../../hooks/useSound'
+import { playSound } from '../../utils/sound'
+import { InstructionsDrawer } from '../help/InstructionsDrawer'
+import { HintButton } from '../help/HintButton'
 
 const NAV_ITEMS: { screen: ScreenId; label: string; icon: typeof Map }[] = [
   { screen: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -40,6 +44,7 @@ const NAV_ITEMS: { screen: ScreenId; label: string; icon: typeof Map }[] = [
 
 export function AppShell({ children }: { children: ReactNode }) {
   const { state, dispatch } = useGame()
+  const play = useSound()
 
   return (
     <div className="min-h-screen flex flex-col bg-navy-950 text-beige-200">
@@ -57,8 +62,10 @@ export function AppShell({ children }: { children: ReactNode }) {
               className="btn-secondary px-2 py-1.5 text-[11px]"
               title={state.muted ? 'Unmute sound effects' : 'Mute sound effects'}
               onClick={() => {
-                saveMuted(!state.muted)
+                const nowMuted = !state.muted
+                saveMuted(nowMuted)
                 dispatch({ type: 'TOGGLE_MUTE' })
+                if (!nowMuted) playSound('toggleOn', false)
               }}
             >
               {state.muted ? <VolumeX size={14} /> : <Volume2 size={14} />}
@@ -67,7 +74,10 @@ export function AppShell({ children }: { children: ReactNode }) {
             <button
               className="btn-secondary px-2 py-1.5 text-[11px]"
               title="Save the case file now"
-              onClick={() => saveGame(state, state.saveSlot)}
+              onClick={() => {
+                saveGame(state, state.saveSlot)
+                play('click')
+              }}
             >
               <Save size={14} />
               <span className="hidden md:inline">Save</span>
@@ -75,7 +85,10 @@ export function AppShell({ children }: { children: ReactNode }) {
             <button
               className="btn-secondary px-2 py-1.5 text-[11px] hover:!border-muted-red hover:!bg-muted-redDark/30"
               title="Return to the main menu"
-              onClick={() => dispatch({ type: 'NAVIGATE', screen: 'main_menu' })}
+              onClick={() => {
+                play('click')
+                dispatch({ type: 'NAVIGATE', screen: 'main_menu' })
+              }}
             >
               <DoorOpen size={14} />
               <span className="hidden md:inline">Menu</span>
@@ -91,7 +104,10 @@ export function AppShell({ children }: { children: ReactNode }) {
               return (
                 <button
                   key={screen}
-                  onClick={() => dispatch({ type: 'NAVIGATE', screen })}
+                  onClick={() => {
+                    if (!active) play('nav')
+                    dispatch({ type: 'NAVIGATE', screen })
+                  }}
                   className={
                     active
                       ? 'flex items-center gap-1.5 px-2.5 py-1.5 rounded text-xs font-mono border border-beige-300 bg-white/10 text-beige-200 shadow-[0_2px_8px_-2px_rgba(255,255,255,0.15)]'
@@ -106,7 +122,11 @@ export function AppShell({ children }: { children: ReactNode }) {
           </div>
         </nav>
       </header>
-      <main className="flex-1 overflow-auto">{children}</main>
+      <main key={state.screen} className="flex-1 overflow-auto animate-fade-in">
+        {children}
+      </main>
+      <InstructionsDrawer />
+      <HintButton />
     </div>
   )
 }

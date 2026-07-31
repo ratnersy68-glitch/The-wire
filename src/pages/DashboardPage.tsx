@@ -4,6 +4,7 @@ import { useGame } from '../game/GameContext'
 import { ASSIGNMENT_LABELS, describeAssignment } from '../utils/assignmentHelpers'
 import { shortName } from '../utils/suspectHelpers'
 import { MiniBar } from '../components/ui/MiniBar'
+import { useSound } from '../hooks/useSound'
 
 const ROLE_LABEL: Record<string, string> = {
   commander: 'Unit Commander',
@@ -16,6 +17,7 @@ const ROLE_LABEL: Record<string, string> = {
 
 export function DashboardPage() {
   const { state, dispatch } = useGame()
+  const play = useSound()
   const assignedCount = state.officers.filter((o) => o.assignment && o.available).length
   const availableCount = state.officers.filter((o) => o.available).length
   const [takedownIds, setTakedownIds] = useState<string[]>(state.suspects.filter((s) => s.arrested).map((s) => s.id))
@@ -71,19 +73,19 @@ export function DashboardPage() {
       <div className="section-label mb-1.5">Quick Actions</div>
       <div className="grid md:grid-cols-3 gap-3 mb-6">
         <button
-          onClick={() => dispatch({ type: 'NAVIGATE', screen: 'officer_assignment' })}
+          onClick={() => { play('nav'); dispatch({ type: 'NAVIGATE', screen: 'officer_assignment' }) }}
           className="btn-secondary px-4 py-3 text-sm"
         >
           <UserCog size={16} /> Assign Detectives
         </button>
         <button
-          onClick={() => dispatch({ type: 'NAVIGATE', screen: 'warrant_request' })}
+          onClick={() => { play('nav'); dispatch({ type: 'NAVIGATE', screen: 'warrant_request' }) }}
           className="btn-secondary px-4 py-3 text-sm"
         >
           <Gavel size={16} /> Request Warrant
         </button>
         <button
-          onClick={() => dispatch({ type: 'NAVIGATE', screen: 'surveillance_report' })}
+          onClick={() => { play('nav'); dispatch({ type: 'NAVIGATE', screen: 'surveillance_report' }) }}
           className="btn-secondary px-4 py-3 text-sm"
         >
           <FileText size={16} /> Case Reports
@@ -91,7 +93,10 @@ export function DashboardPage() {
       </div>
 
       <button
-        onClick={() => dispatch({ type: 'END_DAY' })}
+        onClick={() => {
+          play('stamp')
+          dispatch({ type: 'END_DAY' })
+        }}
         className="w-full flex items-center justify-center gap-2 px-4 py-3 btn-primary font-mono text-sm"
       >
         <CalendarCheck size={16} /> End the Day
@@ -116,7 +121,10 @@ export function DashboardPage() {
             ))}
           </div>
           <button
-            onClick={() => dispatch({ type: 'FINALIZE_CASE', arrestSuspectIds: takedownIds })}
+            onClick={() => {
+              play('stamp')
+              dispatch({ type: 'FINALIZE_CASE', arrestSuspectIds: takedownIds })
+            }}
             className="btn-danger w-full px-4 py-2.5 text-sm"
           >
             Close the Case

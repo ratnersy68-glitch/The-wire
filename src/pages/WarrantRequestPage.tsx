@@ -1,12 +1,29 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useGame } from '../game/GameContext'
 import { Gavel } from 'lucide-react'
 import { isWiretapEligible, WIRETAP_EVIDENCE_THRESHOLD } from '../systems/wiretapSystem'
 import { SEARCH_WARRANT_EVIDENCE_THRESHOLD } from '../systems/investigationSystem'
 import { shortName } from '../utils/suspectHelpers'
+import { useSound } from '../hooks/useSound'
 
 export function WarrantRequestPage() {
   const { state, dispatch } = useGame()
+  const play = useSound()
+  const lastWarrantCount = useRef(state.warrants.length)
+  const [stamp, setStamp] = useState<'approved' | 'denied' | null>(null)
+
+  useEffect(() => {
+    if (state.warrants.length > lastWarrantCount.current) {
+      const latest = state.warrants[state.warrants.length - 1]
+      play(latest.status === 'approved' ? 'stamp' : 'error')
+      setStamp(latest.status === 'approved' ? 'approved' : 'denied')
+      const t = setTimeout(() => setStamp(null), 1400)
+      lastWarrantCount.current = state.warrants.length
+      return () => clearTimeout(t)
+    }
+    lastWarrantCount.current = state.warrants.length
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.warrants.length])
   const [type, setType] = useState<'wiretap' | 'search'>(state.wiretapActive ? 'search' : 'wiretap')
   const [targetSuspectId, setTargetSuspectId] = useState('')
   const [targetLocationId, setTargetLocationId] = useState('')
@@ -30,7 +47,19 @@ export function WarrantRequestPage() {
   }
 
   return (
-    <div className="p-4 md:p-6 max-w-3xl mx-auto">
+    <div className="p-4 md:p-6 max-w-3xl mx-auto relative">
+      {stamp && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
+          <div
+            className={`font-serif font-bold uppercase tracking-widest text-5xl md:text-6xl px-8 py-4 border-8 rounded animate-stamp-slam select-none ${
+              stamp === 'approved' ? 'text-termGreen-500 border-termGreen-500' : 'text-muted-red border-muted-red'
+            }`}
+            style={{ transform: 'rotate(-8deg)' }}
+          >
+            {stamp === 'approved' ? 'Approved' : 'Denied'}
+          </div>
+        </div>
+      )}
       <h2 className="font-serif text-2xl mb-1 flex items-center gap-2"><Gavel size={22} /> Warrant Request</h2>
       <p className="text-sm text-beige-400 mb-6">Warrants cost budget and overtime, and a denial damages prosecutor confidence. Don't ask before you're ready.</p>
 

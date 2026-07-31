@@ -1,7 +1,9 @@
 import { useGame } from '../game/GameContext'
 import { CityMapSVG } from '../components/map/CityMapSVG'
+import { ZoomableMap } from '../components/map/ZoomableMap'
 import { suspectsAtLocation, shortName } from '../utils/suspectHelpers'
 import { UserCog } from 'lucide-react'
+import { useSound } from '../hooks/useSound'
 
 const TYPE_LABEL: Record<string, string> = {
   corner: 'Street Corner',
@@ -21,6 +23,7 @@ const TYPE_LABEL: Record<string, string> = {
 
 export function CityMapPage() {
   const { state, dispatch } = useGame()
+  const play = useSound()
   const selected = state.locations.find((l) => l.id === state.selectedLocationId)
   const linkedSuspects = selected ? suspectsAtLocation(state.suspects, selected.id).filter((s) => s.knownAlias) : []
 
@@ -34,13 +37,16 @@ export function CityMapPage() {
 
       <div className="grid md:grid-cols-3 gap-4">
         <div className="md:col-span-2 flex flex-col gap-2">
-          <div className="aspect-[4/3]">
+          <ZoomableMap onZoomChange={() => play('click')}>
             <CityMapSVG
               locations={state.locations}
               selectedId={state.selectedLocationId}
-              onSelect={(id) => dispatch({ type: 'SELECT_LOCATION', id })}
+              onSelect={(id) => {
+                play('pin')
+                dispatch({ type: 'SELECT_LOCATION', id })
+              }}
             />
-          </div>
+          </ZoomableMap>
           <div className="panel px-3 py-2 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[10px] font-mono text-beige-400">
             <span className="uppercase tracking-wider text-beige-400/70">Map Key:</span>
             <span className="flex items-center gap-1.5">
@@ -93,7 +99,10 @@ export function CityMapPage() {
                 {selected.raided && <p className="text-xs text-muted-red mb-3">This location has already been raided.</p>}
 
                 <button
-                  onClick={() => dispatch({ type: 'NAVIGATE', screen: 'officer_assignment' })}
+                  onClick={() => {
+                    play('nav')
+                    dispatch({ type: 'NAVIGATE', screen: 'officer_assignment' })
+                  }}
                   className="btn-primary w-full px-3 py-2 text-xs"
                 >
                   <UserCog size={14} /> Assign Surveillance Here
