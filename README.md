@@ -140,6 +140,55 @@ and UI chrome — reads in grayscale, closer to a black-and-white case-file phot
    conviction down through leadership escaping, the case collapsing in court, a political
    shutdown, corruption exposed, or the organization simply being replaced by a new crew).
 
+## Two-Player Online Multiplayer
+
+Alongside the single-player campaign, "Two-Player Investigation" is a real-time, server-authoritative
+2-player mode: one player is the Police Detective, the other is the Organization Leader. Neither
+player ever sees the other's screen — the server holds the true match state and sends each player
+only the filtered slice they've legitimately earned (see `shared/mpTypes.ts` and `server/src/game/view.ts`).
+
+- **Server**: Node + Express + Socket.IO + TypeScript, in `server/`. Server-authoritative — every
+  action is validated and applied server-side; clients only ever see their own projected view.
+- **Client**: `src/multiplayer/` — a lobby (create a private room + code, join by code, or Quick Play
+  matchmaking) and two distinct in-match UIs (Police / Organization), reusing this project's existing
+  design system.
+- **Reconnect**: each seat gets a private session token stored in the browser. A dropped connection
+  or page reload reconnects automatically into the same match; a match ends by forfeit if a player
+  doesn't return within 2 minutes.
+
+### Running it locally
+
+```bash
+cd server
+npm install
+npm run dev        # starts the Socket.IO server on :4000
+```
+
+In another terminal, run the client as usual (`npm run dev` from the repo root), open the app, choose
+"Two-Player Investigation (Online)" from the main menu, and enter `http://localhost:4000` as the
+server address.
+
+### Deploying the server so two people can actually play
+
+This site (GitHub Pages) only serves static files — it cannot run the Socket.IO server. The server
+needs to run somewhere with a persistent process. `server/Dockerfile` and `render.yaml` are set up for
+[Render](https://render.com) (a free-tier host works fine for casual play), but any Docker or Node
+host works the same way:
+
+1. Push this repo to GitHub (already done if you're reading this from the repo).
+2. On Render: **New → Web Service**, connect this repo, and either let it pick up `render.yaml`
+   automatically or set: root left at repo root, Dockerfile path `server/Dockerfile`.
+3. Set the `CLIENT_ORIGIN` environment variable to this site's URL (e.g.
+   `https://ratnersy68-glitch.github.io`) so the server's CORS allows it — comma-separate multiple
+   origins if needed (see `server/.env.example`).
+4. Deploy. Render gives you a URL like `https://the-detail-multiplayer.onrender.com` — that's the
+   "Server Address" players paste into the multiplayer lobby. No client rebuild required; the address
+   is entered at runtime and stored in the browser.
+
+Without a hosting deploy, "Play As X" locally, an isolated multiplayer test, or a LAN game (both
+players on the same network, using your machine's local IP instead of `localhost`) all still work
+exactly as described above.
+
 ## Project Structure
 
 ```
@@ -147,10 +196,17 @@ src/
   components/   Reusable UI (layout/nav/resource bar, evidence board canvas, city map SVG)
   data/         Static game data — suspects, officers, locations, calls, code terms, objectives
   game/         GameContext (React context + reducer), initial state factory
-  pages/        The 17 top-level screens
+  pages/        The 17 single-player screens
   systems/      Pure game logic systems (see table above)
   types/        Shared TypeScript interfaces
   utils/        RNG, id generation, suspect/assignment helpers, board layout hashing
+  multiplayer/  The 2-player online mode's client: lobby, socket wrapper, Police/Org views
+  appMode/      Top-level switch between the single-player campaign and multiplayer
+
+shared/
+  mpTypes.ts    Protocol types shared verbatim by the client and the multiplayer server
+
+server/         Node/Express/Socket.IO multiplayer server (see "Two-Player Online Multiplayer" above)
 ```
 
 ## Known Limitations
@@ -162,7 +218,7 @@ src/
 - Chapters 2–5 reuse the same screens and systems as Chapter 1 with new objectives and thresholds
   rather than introducing chapter-specific UI, matching the spec's phased-build guidance (get one
   full chapter working, then expand).
-- Audio is limited to a mute toggle and a quiet visual/terminal aesthetic — no generated sound
-  effects are wired up yet.
 - There is one continuous investigation per save slot; there's no way to branch/replay a single
   chapter in isolation.
+- Multiplayer matches are held in server memory only — restarting the server drops any in-progress
+  matches. There's no persistence/database layer, matching the scope of a casual 2-player mode.

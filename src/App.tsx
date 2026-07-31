@@ -1,5 +1,7 @@
 import { GameProvider, useGame } from './game/GameContext'
 import { AppShell } from './components/layout/AppShell'
+import { AppModeProvider, useAppMode } from './appMode/AppModeContext'
+import { MultiplayerRoot } from './multiplayer/MultiplayerRoot'
 import {
   MainMenuPage,
   NewGameSetupPage,
@@ -75,11 +77,21 @@ function GameShell() {
   return <AppShell>{content}</AppShell>
 }
 
-function App() {
+function Root() {
+  const { mode } = useAppMode()
+  if (mode === 'multiplayer') return <MultiplayerRoot />
   return (
     <GameProvider>
       <GameShell />
     </GameProvider>
+  )
+}
+
+function App() {
+  return (
+    <AppModeProvider>
+      <Root />
+    </AppModeProvider>
   )
 }
 

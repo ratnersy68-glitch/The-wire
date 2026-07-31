@@ -1,7 +1,8 @@
-import { Play, FolderOpen, RotateCcw } from 'lucide-react'
+import { Play, FolderOpen, RotateCcw, Radio } from 'lucide-react'
 import { useGame } from '../game/GameContext'
 import { listSaveSlots } from '../systems/saveSystem'
 import { useSound } from '../hooks/useSound'
+import { useAppMode } from '../appMode/AppModeContext'
 
 function caseNumber(): string {
   const now = new Date()
@@ -13,6 +14,7 @@ function caseNumber(): string {
 export function MainMenuPage() {
   const { dispatch } = useGame()
   const play = useSound()
+  const { setMode } = useAppMode()
   const slots = listSaveSlots()
   const hasAnySave = slots.some((s) => s.exists)
 
@@ -58,6 +60,13 @@ export function MainMenuPage() {
               className="btn-ghost px-4 py-3 text-sm"
             >
               <RotateCcw size={16} /> Manage Save Slots
+            </button>
+            <div className="w-full h-px bg-charcoal-600 my-1" />
+            <button
+              onClick={() => { play('nav'); setMode('multiplayer') }}
+              className="btn-secondary px-4 py-3 text-sm"
+            >
+              <Radio size={16} /> Two-Player Investigation (Online)
             </button>
           </div>
 
