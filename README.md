@@ -189,6 +189,22 @@ Without a hosting deploy, "Play As X" locally, an isolated multiplayer test, or 
 players on the same network, using your machine's local IP instead of `localhost`) all still work
 exactly as described above.
 
+#### Deploying to Fly.io instead
+
+`fly.toml` at the repo root is already set up for this. Fly is CLI-driven rather than a web dashboard
+click-through, and now requires a payment method on file even for usage that stays within the free
+allowance (small apps like this one typically do).
+
+1. Install `flyctl`: `curl -L https://fly.io/install.sh | sh` (macOS/Linux) or
+   `iwr https://fly.io/install.ps1 -useb | iex` (Windows PowerShell).
+2. `fly auth signup` (or `fly auth login` if you already have an account).
+3. Clone this repo locally and `cd` into it, then run `fly launch --no-deploy` from the repo root —
+   it reads `fly.toml`, asks you to confirm/rename the app, and creates it without deploying yet.
+4. `fly secrets set CLIENT_ORIGIN=https://ratnersy68-glitch.github.io`
+5. `fly deploy`
+6. `fly status` (or the output of step 5) shows your URL, `https://<app-name>.fly.dev` — that's the
+   "Server Address" to paste into the multiplayer lobby.
+
 ## Project Structure
 
 ```
