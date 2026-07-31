@@ -1,5 +1,5 @@
-import type { LocationType, OrgLocation, OrgMember, OrgRole, PhoneLine } from '../../../shared/mpTypes.js'
-import { STARTING_NETWORK_SIZE } from '../../../shared/mpTypes.js'
+import type { LocationType, OrgLocation, OrgMember, OrgRole, PhoneLine } from '../shared/mpTypes.js'
+import { STARTING_NETWORK_SIZE } from '../shared/mpTypes.js'
 import { makeRng } from './rng.js'
 
 const DISTRICTS = ['Old Market', 'Docklands', 'The Row', 'Eights', 'West Terrace', 'Fenwick', 'Central Business District']

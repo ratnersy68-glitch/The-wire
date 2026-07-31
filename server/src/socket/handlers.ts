@@ -1,6 +1,6 @@
 import type { Server, Socket } from 'socket.io'
-import type { ClientToServerEvents, MatchAction, Role, ServerToClientEvents } from '../../../shared/mpTypes.js'
-import { ORG_ACTION_TYPES, POLICE_ACTION_TYPES } from '../../../shared/mpTypes.js'
+import type { ClientToServerEvents, MatchAction, Role, ServerToClientEvents } from '../shared/mpTypes.js'
+import { ORG_ACTION_TYPES, POLICE_ACTION_TYPES } from '../shared/mpTypes.js'
 import {
   cancelPendingRoom,
   createDirectMatch,

@@ -1,5 +1,5 @@
-import type { OrgView, PoliceView } from '../../../shared/mpTypes.js'
-import { DEADLINE_HOURS } from '../../../shared/mpTypes.js'
+import type { OrgView, PoliceView } from '../shared/mpTypes.js'
+import { DEADLINE_HOURS } from '../shared/mpTypes.js'
 import type { MatchState } from './state.js'
 import { gameHour } from './state.js'
 

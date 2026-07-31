@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto'
-import type { Role } from '../../shared/mpTypes.js'
-import { RECONNECT_GRACE_MS } from '../../shared/mpTypes.js'
+import type { Role } from './shared/mpTypes.js'
+import { RECONNECT_GRACE_MS } from './shared/mpTypes.js'
 import { createMatchState, type MatchState } from './game/state.js'
 
 const CODE_CHARS = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789'

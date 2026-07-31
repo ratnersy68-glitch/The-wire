@@ -13,4 +13,4 @@ COPY --from=build /repo/server/package.json /repo/server/package-lock.json* ./se
 RUN cd server && npm install --omit=dev
 COPY --from=build /repo/server/dist ./server/dist
 EXPOSE 4000
-CMD ["node", "server/dist/server/src/index.js"]
+CMD ["node", "server/dist/index.js"]

@@ -1,4 +1,4 @@
-import type { OrgAction } from '../../../../shared/mpTypes.js'
+import type { OrgAction } from '../../shared/mpTypes.js'
 import type { MatchState } from '../state.js'
 import { gameHour, nextId } from '../state.js'
 import { clamp, lockForever, onCooldown, setCooldown, type ActionResult } from './common.js'

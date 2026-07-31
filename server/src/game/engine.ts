@@ -1,4 +1,4 @@
-import { DEADLINE_HOURS, ORG_SURVIVAL_FLOOR, POLICE_WIN_ARREST_FRACTION, POLICE_WIN_EVIDENCE_THRESHOLD, STARTING_NETWORK_SIZE } from '../../../shared/mpTypes.js'
+import { DEADLINE_HOURS, ORG_SURVIVAL_FLOOR, POLICE_WIN_ARREST_FRACTION, POLICE_WIN_EVIDENCE_THRESHOLD, STARTING_NETWORK_SIZE } from '../shared/mpTypes.js'
 import type { MatchState } from './state.js'
 import { gameHour, nextId } from './state.js'
 import { clamp } from './actions/common.js'

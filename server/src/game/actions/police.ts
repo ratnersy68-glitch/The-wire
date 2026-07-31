@@ -1,4 +1,4 @@
-import type { PoliceAction } from '../../../../shared/mpTypes.js'
+import type { PoliceAction } from '../../shared/mpTypes.js'
 import type { MatchState } from '../state.js'
 import { gameHour, nextId } from '../state.js'
 import { clamp, onCooldown, setCooldown, type ActionResult } from './common.js'
@@ -26,7 +26,7 @@ function findLocation(match: MatchState, id: string) {
 
 function addEvidence(
   match: MatchState,
-  opts: { type: import('../../../../shared/mpTypes.js').EvidenceType; targetMemberId?: string; targetLocationId?: string; description: string; reliability: number },
+  opts: { type: import('../../shared/mpTypes.js').EvidenceType; targetMemberId?: string; targetLocationId?: string; description: string; reliability: number },
 ) {
   const item = {
     id: nextId('ev'),

@@ -8,14 +8,14 @@ import type {
   PoliceLogEntry,
   Role,
   Warrant,
-} from '../../../shared/mpTypes.js'
+} from '../shared/mpTypes.js'
 import {
   DEADLINE_HOURS,
   REAL_MS_PER_GAME_HOUR,
   STARTING_ORG_CASH,
   STARTING_POLICE_BUDGET,
   STARTING_POLICE_MANPOWER,
-} from '../../../shared/mpTypes.js'
+} from '../shared/mpTypes.js'
 import { generateRoster } from './data.js'
 
 export interface PlayerSeat {

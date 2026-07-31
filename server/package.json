@@ -4,9 +4,11 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
+    "predev": "node scripts/copy-shared.mjs",
     "dev": "tsx watch src/index.ts",
+    "prebuild": "node scripts/copy-shared.mjs",
     "build": "tsc",
-    "start": "node dist/server/src/index.js"
+    "start": "node dist/index.js"
   },
   "dependencies": {
     "cors": "^2.8.5",

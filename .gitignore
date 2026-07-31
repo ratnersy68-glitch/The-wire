@@ -5,3 +5,7 @@ dist-ssr
 *.tsbuildinfo
 .DS_Store
 npm-debug.log*
+# Generated copy of shared/mpTypes.ts made by server/scripts/copy-shared.mjs
+# so the server is a normal self-contained TS project — canonical source
+# stays at shared/mpTypes.ts.
+server/src/shared/
